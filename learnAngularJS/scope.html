@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<meta charset="utf-8">
+	<title>scope</title>
+
+</head>
+<body>
+	<div ng-controller="eventCtrl">
+		Root scope
+		<tt>myEvent</tt> count:{{count}}
+		<ul>
+			<li ng-repeat="i in [1]" ng-controller="eventCtrl">
+				<button ng-click="$emit('myEvent')">
+					$emit('myEvent')
+				</button>
+				<button ng-click="$broadcast('myEvent')">
+					$emit('myEvent')
+				</button>
+				<br>
+				Middle scope
+				<tt>myEvent</tt> count:{{count}}
+				<ul>
+					<li ng-repeat="i in [1,2]" ng-controller="eventCtrl">
+						Leaf scope
+						<tt>myEvent</tt> count:{{count}}
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<script src="js/angular-1.3.0.js"></script>
+	<script>
+		function eventCtrl($scope){
+			$scope.count = 0;
+			$scope.$on("myEvent",function(){
+				$scope.count++;
+			})
+		}
+	</script>
+</body>
+</html>
